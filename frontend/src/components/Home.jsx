@@ -10,7 +10,7 @@ const Home = () => {
       .get("http://localhost:3000/api/workouts/")
       .then((res) => {
         setWorkouts(res.data);
-        console.log(res.data)
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -19,10 +19,11 @@ const Home = () => {
 
   return (
     <div className="home">
-      <div className="section items-center justify-center grid grid-cols-2">
-
-        {workouts && <WorkoutDetails workouts={workouts}/>}
-        <WorkoutForm/>
+      <div className="section items-center flex">
+        {workouts && (
+          <WorkoutDetails title={"All Workouts"} workouts={workouts} />
+        )}
+        {/* <WorkoutForm /> */}
       </div>
     </div>
   );

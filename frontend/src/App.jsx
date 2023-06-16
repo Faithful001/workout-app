@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
+import WorkoutForm from "./components/WorkoutForm";
 
 function App() {
   return (
@@ -13,6 +14,9 @@ function App() {
       <Switch>
           <Route exact path='/'>
             <Home/>
+          </Route>
+          <Route exact path='/add-new-workout'>
+            <WorkoutForm/>
           </Route>
       </Switch>
         </div>
