@@ -14,7 +14,7 @@ const NavBar = () => {
             </h1>
           </Link>
           <Link to="/add-new-workout">
-            <Button color="dark" pill className="absolute right-0 top-3 mr-10">
+            <Button color="dark" pill className="absolute right-0 top-3 mr-6">
               <p>Add New Workout</p>
             </Button>
           </Link>

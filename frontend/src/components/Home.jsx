@@ -4,6 +4,7 @@ import WorkoutDetails from "./WorkoutDetails";
 import WorkoutForm from "./WorkoutForm";
 const Home = () => {
   const [workouts, setWorkouts] = useState([]);
+  console.log(workouts)
 
   useEffect(() => {
     axios

@@ -3,7 +3,7 @@
 import axios from "axios";
 // only import what you want to use
 import { Button, Label, TextInput } from "flowbite-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 const WorkoutForm = () => {
@@ -19,18 +19,34 @@ const WorkoutForm = () => {
 
     const workout = { title, load, reps };
     // console.log(workout)
-    axios.post("http://localhost:3000/api/workouts/", {
-        workout,
-      })
-      .then((res) => {
-        // console.log(res.data);
-        // setTitle(res.data.title);
-        // setLoad(res.data.load);
-        // setReps(res.data.reps);
-        console.log(res.data)
-        // history.push('/')
-      })
-      .catch((err) => setError(`There was an error, ${err.message}`));
+     const res = axios.post("http://localhost:3000/api/workouts/", workout)
+    .then((res)=>{
+      console.log(res.data)
+    })
+    .catch(err => setError(err))
+
+    if(!res.ok) {
+      setError(res.error)
+    }
+    if(res.ok){
+      setTitle('');
+      setLoad('');
+      setReps('');
+      setError(null);
+      console.log("new workout added");
+    }
+
+
+    // if (!res.ok) {
+    //   setError(json.error);
+    // }
+    // if (res.ok) {
+    //   setTitle('');
+    //   setLoad('');
+    //   setReps('');
+    //   setError(null);
+    //   console.log("new workout added");
+    // }
   }
   return (
     <div className="workout-form">
@@ -81,6 +97,7 @@ const WorkoutForm = () => {
           </Button>
         </form>
       </div>
+      <p>{error}</p>
     </div>
   );
 };
