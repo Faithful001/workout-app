@@ -10,7 +10,7 @@ const Home = () => {
       .get("http://localhost:3000/api/workouts/")
       .then((res) => {
         setWorkouts(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch((err) => {
         console.log(err);

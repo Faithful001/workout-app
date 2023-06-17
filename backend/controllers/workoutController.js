@@ -29,7 +29,7 @@ const createWorkout = async (req, res)=>{
     const {title, load, reps} = req.body;
     // add doc to db
     try{
-    const workout = await Workout.create({title, reps, load});
+    const workout = await Workout.create({title, load, reps});
     res.status(200).json(workout);
     }catch(err){
         res.status(400).json({err: err.message})

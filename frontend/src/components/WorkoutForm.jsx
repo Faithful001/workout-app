@@ -18,19 +18,20 @@ const WorkoutForm = () => {
     e.preventDefault();
 
     const workout = { title, load, reps };
-    axios
-      .post("http://localhost:3000/api/workouts/", {
+    // console.log(workout)
+    axios.post("http://localhost:3000/api/workouts/", {
         workout,
       })
       .then((res) => {
         // console.log(res.data);
-        setTitle(res.data.title);
-        setLoad(res.data.load);
-        setReps(res.data.reps);
+        // setTitle(res.data.title);
+        // setLoad(res.data.load);
+        // setReps(res.data.reps);
+        console.log(res.data)
         // history.push('/')
       })
       .catch((err) => setError(`There was an error, ${err.message}`));
-  };
+  }
   return (
     <div className="workout-form">
       <div className="section mt-10 flex items-center flex-col">
