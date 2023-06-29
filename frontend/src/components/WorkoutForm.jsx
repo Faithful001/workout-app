@@ -19,35 +19,28 @@ const WorkoutForm = () => {
 
     const workout = { title, load, reps };
     // console.log(workout)
-     const res = axios.post("http://localhost:3000/api/workouts/", workout)
-    .then((res)=>{
-      console.log(res.data)
-    })
-    .catch(err => setError(err))
+    axios
+      .post("http://localhost:3000/api/workouts/", workout)
+      .then((res) => {
+        console.log(res.data);
+        setTitle("");
+        setLoad("");
+        setReps("");
+      })
+      .catch((err) => setError(err));
 
-    if(!res.ok) {
-      setError(res.error)
-    }
-    if(res.ok){
-      setTitle('');
-      setLoad('');
-      setReps('');
-      setError(null);
-      console.log("new workout added");
-    }
-
-
-    // if (!res.ok) {
-    //   setError(json.error);
+    // if(!res.ok) {
+    //   setError(res.error)
     // }
-    // if (res.ok) {
+    // if(res.ok){
     //   setTitle('');
     //   setLoad('');
     //   setReps('');
     //   setError(null);
     //   console.log("new workout added");
     // }
-  }
+    history.push("/");
+  };
   return (
     <div className="workout-form">
       <div className="section mt-10 flex items-center flex-col">
