@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import WorkoutForm from "./components/WorkoutForm";
+import WorkoutDetailsFull from "./components/WorkoutDetailsFull";
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
           </Route>
           <Route exact path='/add-new-workout'>
             <WorkoutForm/>
+          </Route>
+          <Route exact path='/workout/:id'>
+            <WorkoutDetailsFull/>
           </Route>
       </Switch>
         </div>

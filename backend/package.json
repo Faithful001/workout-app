@@ -1,11 +1,11 @@
 {
   "name": "workout-app",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -15,5 +15,6 @@
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
     "mongoose": "^7.3.0"
-  }
+  },
+  "description": ""
 }
