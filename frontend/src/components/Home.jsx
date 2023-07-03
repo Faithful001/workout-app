@@ -6,7 +6,7 @@ import { useWorkoutContext } from "../hooks/useWorkoutContext";
 
 const Home = () => {
   const {workouts, dispatch} = useWorkoutContext();
-  console.log(workouts)
+  // console.log(workouts)
 
   useEffect(() => {
     axios
