@@ -1,11 +1,13 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import WorkoutDetails from "./WorkoutDetails";
-import WorkoutForm from "./WorkoutForm";
-import { useWorkoutContext } from "../hooks/useWorkoutContext";
+// import WorkoutForm from "./WorkoutForm";
+import { WorkoutContext } from "../context/WorkoutContext";
+// import { useWorkoutContext } from "../hooks/useWorkoutContext";
 
 const Home = () => {
-  const {workouts, dispatch} = useWorkoutContext();
+  // const {workouts, workoutDispatch} = useWorkoutContext();
+  const {state, dispatch} = useContext(WorkoutContext)
   // console.log(workouts)
 
   useEffect(() => {
@@ -23,8 +25,8 @@ const Home = () => {
   return (
     <div className="home">
       <div className="section items-center justify-center flex">
-        {workouts && (
-          <WorkoutDetails title={"All Workouts"} workouts={workouts} />
+        {state && (
+          <WorkoutDetails title={"All Workouts"} />
         )}
         {/* <WorkoutForm /> */}
       </div>

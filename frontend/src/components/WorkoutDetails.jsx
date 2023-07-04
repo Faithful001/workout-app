@@ -1,9 +1,12 @@
 import axios from "axios";
-import { useWorkoutContext } from "../hooks/useWorkoutContext";
+// import { useWorkoutContext } from "../hooks/useWorkoutContext";
+import { WorkoutContext } from "../context/WorkoutContext";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
 
-const WorkoutDetails = ({ workouts, title }) => {
-  const { dispatch } = useWorkoutContext();
+const WorkoutDetails = ({ title }) => {
+  // const { dispatch } = useWorkoutContext();
+  const {state, dispatch} = useContext(WorkoutContext)
 
   const handleDelete = async () => {
     // const workoutToDelete = workouts.find(
@@ -36,7 +39,7 @@ const WorkoutDetails = ({ workouts, title }) => {
     <div className="workout-details">
       <div className="section m-5">
         <h1 className="text-2xl font-bold text-center">{title}</h1>
-        {workouts.map((workout) => (
+        {state.map((workout) => (
           <Link to={`/workout/${workout._id}`} key={workout._id}>
             <div className="m-5 bg-white hover:shadow-lg rounded-md p-6 w-full px-8">
               <div className="flex ">
