@@ -13,12 +13,12 @@ export const workoutsReducer = (state, action) => {
         workouts: action.payload,
       };
     case "GET_WORKOUT":
-        // const workoutId = action.payload;
-        // const workout = state.workouts.find((workout) => workout._id === workoutId);
-        
-        return {
-          ...state,
-          workouts: action.payload,
+      const workoutId = action.payload;
+      const workout = state.workouts.find((workout) => workout._id === workoutId);
+
+      return {
+        ...state,
+        workouts: action.payload,
       };
 
     case "CREATE_WORKOUT":
@@ -29,6 +29,16 @@ export const workoutsReducer = (state, action) => {
       return {
         workouts: state.workouts.filter((w) => w._id !== action.payload._id),
       };
+    case "UPDATE_WORKOUT":
+      const updatedWorkout = action.payload; // Assuming action.payload contains the updated workout data
+      const updatedWorkouts = state.workouts.map((workout) =>
+        workout._id === updatedWorkout._id ? updatedWorkout : workout
+      );
+      return {
+        ...state,
+        workouts: updatedWorkouts,
+      };
+
     default:
       return state;
   }
