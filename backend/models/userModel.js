@@ -4,7 +4,7 @@ const validator = require("validator");
 
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
+const userSchema = new Schema({
   email: {
     type: String,
     unique: true,
@@ -20,7 +20,7 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.statics.signup = async function (email, name, password) {
+userSchema.statics.signup = async function (email, name, password) {
   if (!email || !name || !password) {
     throw new Error("All fields are required");
   }
@@ -43,7 +43,7 @@ UserSchema.statics.signup = async function (email, name, password) {
   return user;
 };
 
-UserSchema.statics.login = async function (email, password) {
+userSchema.statics.login = async function (email, password) {
   if (!email || !password) {
     throw new Error("All fields are required");
   }
@@ -61,6 +61,6 @@ UserSchema.statics.login = async function (email, password) {
   return user;
 };
 
-const model = mongoose.model("User", UserSchema);
+const model = mongoose.model("User", userSchema);
 
 module.exports = model;
