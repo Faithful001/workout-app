@@ -38,7 +38,7 @@ userSchema.statics.signup = async function (email, name, password) {
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 
-  const user = this.create({ email, name, password: hash });
+  const user = await this.create({ email, name, password: hash });
 
   return user;
 };
@@ -48,9 +48,9 @@ userSchema.statics.login = async function (email, password) {
     throw new Error("All fields are required");
   }
 
-  const user = this.findOne({ email });
+  const user = await this.findOne({ email });
   if (!user) {
-    throw new Error("User not found");
+    throw new Error("Incorrect email");
   }
 
   const match = await bcrypt.compare(password, user.password);

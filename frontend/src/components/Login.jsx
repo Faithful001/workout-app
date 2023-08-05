@@ -1,16 +1,20 @@
 'use client';
 
 import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { useContext, useState } from 'react';
+import axios from 'axios';
+import { Link, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { API } from '../api';
 import { QueryClient, useMutation, useQueryClient } from 'react-query';
+import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
     const [error, setError] = useState("")
+    const { user, dispatch } = useContext(AuthContext)
+    const history = useHistory()
 
     const queryClient = useQueryClient()
 
@@ -18,11 +22,18 @@ const Login = () => {
     const handleSubmit = async () => {
         try {
             const response = await axios.post(`${API.localAPI}api/user/login`, body)
-            console.log(response.data)
-            return response.data
+            localStorage.setItem("user", JSON.stringify(response?.data))
+            dispatch({ type: "LOGIN", payload: response?.data })
+            setMessage(response.data?.message);
+            setError("");
+            history.push("/")
+            console.log(response?.data)
+            return response?.data
 
         } catch (error) {
             console.log(error)
+            // setError(error.response?.data?.error)
+            setMessage("")
         }
     }
 
@@ -34,7 +45,7 @@ const Login = () => {
             console.log(error.message)
         }
     },
-       )
+    )
 
     const handleFormSubmit = (e) => {
         e.preventDefault()
