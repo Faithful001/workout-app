@@ -1,5 +1,3 @@
-'use client';
-
 import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
 import { useContext, useState } from 'react';
 import axios from 'axios';
@@ -44,8 +42,7 @@ const Login = () => {
         onError: (error) => {
             console.log(error.message)
         }
-    },
-    )
+    })
 
     const handleFormSubmit = (e) => {
         e.preventDefault()
@@ -54,7 +51,7 @@ const Login = () => {
 
 
     return (
-        <div className="login w-[30rem] h-screen pb-5 px-[10px]">
+        <div className="login w-[30rem] absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 pb-5 px-[10px]">
             <div className="section p-10 mx-16 ">
                 <form className="flex max-w-md flex-col gap-4" onSubmit={handleFormSubmit}>
                     <h1 className="flex justify-center font-bold text-[30px]">

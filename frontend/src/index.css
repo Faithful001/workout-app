@@ -2,7 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background-color: rgb(235, 235, 235);
+body {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  background-color: rgb(235, 235, 235);
 }
+
+.home {
+  min-height: 100%;
+  height: 100vh;
+  /* width: 100%; */
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+/* .login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+} */

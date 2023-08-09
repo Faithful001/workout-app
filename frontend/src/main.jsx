@@ -9,7 +9,7 @@ import { AuthContextProvider } from "./context/AuthContext.jsx";
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <AuthContextProvider>
       <QueryClientProvider client={queryClient}>
         <WorkoutContextProvider>
@@ -17,5 +17,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </WorkoutContextProvider>
       </QueryClientProvider>
     </AuthContextProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
