@@ -3,52 +3,59 @@ import axios from "axios";
 import { WorkoutContext } from "../context/WorkoutContext";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-
+import { AuthContext } from "../context/AuthContext";
 
 const WorkoutDetails = () => {
-  const { workouts, dispatch } = useContext(WorkoutContext);
+	const { workouts, dispatch } = useContext(WorkoutContext);
+	const { user } = useContext(AuthContext);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/workouts/")
-      .then((res) => {
-        dispatch({ type: "GET_WORKOUTS", payload: res.data });
-        // console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+	useEffect(() => {
+		if (user && user.token) {
+			axios
+				.get("http://localhost:3000/api/workouts/", {
+					headers: { Authorization: `Bearer: ${user.token}` },
+				})
+				.then((res) => {
+					dispatch({ type: "GET_WORKOUTS", payload: res.data });
+					// console.log(res.data);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+	}, [user]);
 
-  return (
-    <div className="workout-details">
-      <div className="section m-5">
-        <h1 className="text-2xl font-bold text-center">All Workouts</h1>
+	return (
+		<div className="workout-details">
+			<div className="section m-5">
+				<h1 className="text-2xl font-bold text-center">All Workouts</h1>
 
-        {workouts &&
-          workouts.map((workout) => (
-            <Link to={`/workout/${workout._id}`} key={workout._id}>
-              <div className="flex flex-col items-center justify-center w-screen">
-                <div className="m-5 bg-white hover:shadow-lg rounded-md p-6 px-20">
-                  <div className="flex ">
-                    <h4 className="uppercase font-bold text-2xl text-sky-700">
-                      {workout.title}
-                    </h4>
-                  </div>
-                  <p className="text-lg">
-                    <strong>Load (kg):</strong> {workout.load}
-                  </p>
-                  <p className="text-lg">
-                    <strong>Reps:</strong> {workout.reps}
-                  </p>
-                  <p className="text-sm">{workout.updatedAt}</p>
-                </div>
-              </div>
-            </Link>
-          ))}
-      </div>
-    </div>
-  );
+				{!user && <div> Login or signup to continue</div>}
+
+				{workouts &&
+					workouts.map((workout) => (
+						<Link to={`/workout/${workout._id}`} key={workout._id}>
+							<div className="flex flex-col items-center justify-center w-screen">
+								<div className="m-5 bg-white hover:shadow-lg rounded-md p-6 px-20">
+									<div className="flex ">
+										<h4 className="uppercase font-bold text-2xl text-sky-700">
+											{workout.title}
+										</h4>
+									</div>
+									<p className="text-lg">
+										<strong>Load (kg):</strong> {workout.load}
+									</p>
+									<p className="text-lg">
+										<strong>Reps:</strong> {workout.reps}
+									</p>
+									<p className="text-sm">{workout.updatedAt}</p>
+								</div>
+							</div>
+						</Link>
+					))}
+			</div>
+		</div>
+	);
 };
 
 export default WorkoutDetails;
