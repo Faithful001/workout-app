@@ -45,7 +45,10 @@ const WorkoutDetails = () => {
 			<div className="section m-5">
 				<h1 className="text-2xl font-bold text-center">All Workouts</h1>
 				{!user ? (
-					<div> Login or signup to continue</div>
+					<div className="flex items-center justify-center flex-col">
+						{" "}
+						Login or signup to continue
+					</div>
 				) : (
 					<div>
 						{workouts && workouts.length > 0 ? (
@@ -77,8 +80,8 @@ const WorkoutDetails = () => {
 								))}
 							</div>
 						) : (
-							<div>
-								<h1 className="text-center text-lg mt-5 mb-2 bg-[#1F2937] text-white p-2 rounded-lg">
+							<div className="flex items-center justify-center flex-col">
+								<h1 className="text-center text-lg mt-5 mb-2 bg-[#1F2937] text-white p-2 px-4 rounded-lg">
 									No workouts
 								</h1>
 								<p className="text-lg text-center">Add a workout</p>
