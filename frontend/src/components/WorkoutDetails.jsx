@@ -3,27 +3,45 @@ import axios from "axios";
 import { WorkoutContext } from "../context/WorkoutContext";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+// import { AuthContext } from "../context/AuthContext";
+import { useQuery } from "@tanstack/react-query";
 
 const WorkoutDetails = () => {
-	const { workouts, dispatch } = useContext(WorkoutContext);
-	const { user } = useContext(AuthContext);
+	// const { state, dispatch } = useContext(WorkoutContext);
+	// console.log(state);
+	const [workouts, setWorkouts] = useState([]);
+	console.log(workouts);
+	// const { user } = useContext(AuthContext);
 
-	useEffect(() => {
-		if (user && user.token) {
-			axios
+	const user = localStorage.getItem("user");
+	const parsedUser = JSON.parse(user);
+	const token = user && parsedUser.token;
+	if (token) {
+		function getWorkouts() {
+			return axios
 				.get("http://localhost:3000/api/workouts/", {
-					headers: { Authorization: `Bearer: ${user.token}` },
+					headers: { Authorization: `Bearer: ${token}` },
 				})
 				.then((res) => {
-					dispatch({ type: "GET_WORKOUTS", payload: res.data });
-					// console.log(res.data);
+					console.log(res.data);
+					return res.data; // Return the data
 				})
 				.catch((err) => {
 					console.log(err);
+					throw err; // You might want to throw the error here to handle it later
 				});
 		}
-	}, [user]);
+
+		const { isLoading, error, data } = useQuery(["workouts"], getWorkouts, {
+			enabled: Boolean(workouts),
+		});
+
+		console.log(data);
+		useEffect(() => {
+			data && setWorkouts(data);
+			isLoading && <div>Loading...</div>;
+		}, [data]);
+	}
 
 	return (
 		<div className="workout-details">
@@ -32,27 +50,48 @@ const WorkoutDetails = () => {
 
 				{!user && <div> Login or signup to continue</div>}
 
-				{workouts &&
-					workouts.map((workout) => (
-						<Link to={`/workout/${workout._id}`} key={workout._id}>
-							<div className="flex flex-col items-center justify-center w-screen">
-								<div className="m-5 bg-white hover:shadow-lg rounded-md p-6 px-20">
-									<div className="flex ">
-										<h4 className="uppercase font-bold text-2xl text-sky-700">
-											{workout.title}
-										</h4>
+				{workouts && workouts.length > 0 ? (
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-white">
+						{workouts.map((workout) => (
+							<div
+								key={workout._id}
+								className="m-5 bg-white hover:shadow-lg rounded-md p-6 px-14 flex"
+							>
+								<Link to={`/workout/${workout._id}`}>
+									<div className="flex flex-col items-start justify-center p-5 mr-2 -ml-3">
+										<div className="flex ">
+											<h4 className="uppercase font-bold text-2xl text-sky-700">
+												{workout.title}
+											</h4>
+										</div>
+										<p className="text-lg text-black">
+											<strong>Load (kg):</strong> {workout.load}
+										</p>
+										<p className="text-lg text-black">
+											<strong>Reps:</strong> {workout.reps}
+										</p>
+										<p className="text-sm text-black">{workout.updatedAt}</p>
 									</div>
-									<p className="text-lg">
-										<strong>Load (kg):</strong> {workout.load}
-									</p>
-									<p className="text-lg">
-										<strong>Reps:</strong> {workout.reps}
-									</p>
-									<p className="text-sm">{workout.updatedAt}</p>
-								</div>
+								</Link>
+								{/* <div>
+									<span className="material-symbols-outlined text-black cursor-pointer">
+										delete
+									</span>
+									<span className="material-symbols-outlined text-black ml-2 -mr-6 cursor-pointer">
+										edit
+									</span>
+								</div> */}
 							</div>
-						</Link>
-					))}
+						))}
+					</div>
+				) : (
+					<div>
+						<h1 className="text-center text-lg mt-5 mb-2 bg-[#1F2937] text-white p-2 rounded-lg">
+							No workouts
+						</h1>
+						<p className="text-lg text-center">Add a workout</p>
+					</div>
+				)}
 			</div>
 		</div>
 	);

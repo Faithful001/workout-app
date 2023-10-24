@@ -6,6 +6,7 @@ import { Button, Label, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { WorkoutContext } from "../context/WorkoutContext";
 import { useContext } from "react";
 
 const WorkoutForm = () => {
@@ -14,12 +15,10 @@ const WorkoutForm = () => {
 	const [reps, setReps] = useState("");
 	// const [form, setForm] = useState("");
 	const [error, setError] = useState("");
+	const { dispatch } = useContext(WorkoutContext);
 	const navigate = useNavigate();
 
 	const { user } = useContext(AuthContext);
-
-	if (user && user.token) {
-	}
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -37,12 +36,13 @@ const WorkoutForm = () => {
 				}
 			);
 			console.log(response.data);
+			dispatch({ type: "CREATE_WORKOUT", payload: response.data });
+			navigate("/");
 			setTitle("");
 			setLoad("");
 			setReps("");
 		} catch (err) {
 			setError(err);
-			navigate("/");
 		}
 	};
 	return (

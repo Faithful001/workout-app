@@ -13,15 +13,13 @@ export const workoutsReducer = (state, action) => {
 				workouts: action.payload,
 			};
 		case "GET_WORKOUT":
-			const workoutId = action.payload;
+			const { workoutId } = action.payload;
 			const workout = state.workouts.find(
 				(workout) => workout._id === workoutId
 			);
 			return {
-				...state,
-				workouts: workout,
+				workouts: workout ? [workout] : state.workouts,
 			};
-
 		case "CREATE_WORKOUT":
 			return {
 				workouts: [action.payload, ...state.workouts],
@@ -47,6 +45,7 @@ export const workoutsReducer = (state, action) => {
 
 export const WorkoutContextProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(workoutsReducer, INITIAL_STATE);
+	console.log(state);
 
 	return (
 		<WorkoutContext.Provider value={{ ...state, dispatch }}>
