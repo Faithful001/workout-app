@@ -1,21 +1,17 @@
 import axios from "axios";
-// import { useWorkoutContext } from "../hooks/useWorkoutContext";
-import { WorkoutContext } from "../context/WorkoutContext";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-// import { AuthContext } from "../context/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 
 const WorkoutDetails = () => {
-	// const { state, dispatch } = useContext(WorkoutContext);
-	// console.log(state);
 	const [workouts, setWorkouts] = useState([]);
 	console.log(workouts);
-	// const { user } = useContext(AuthContext);
 
 	const user = localStorage.getItem("user");
 	const parsedUser = JSON.parse(user);
+	const name = user && parsedUser.name;
 	const token = user && parsedUser.token;
+
 	if (token) {
 		function getWorkouts() {
 			return axios
@@ -24,11 +20,11 @@ const WorkoutDetails = () => {
 				})
 				.then((res) => {
 					console.log(res.data);
-					return res.data; // Return the data
+					return res.data;
 				})
 				.catch((err) => {
 					console.log(err);
-					throw err; // You might want to throw the error here to handle it later
+					throw err;
 				});
 		}
 
@@ -47,49 +43,54 @@ const WorkoutDetails = () => {
 		<div className="workout-details">
 			<div className="section m-5">
 				<h1 className="text-2xl font-bold text-center">All Workouts</h1>
-
-				{!user && <div> Login or signup to continue</div>}
-
-				{workouts && workouts.length > 0 ? (
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-white">
-						{workouts.map((workout) => (
-							<div
-								key={workout._id}
-								className="m-5 bg-white hover:shadow-lg rounded-md p-6 px-14 flex"
-							>
-								<Link to={`/workout/${workout._id}`}>
-									<div className="flex flex-col items-start justify-center p-5 mr-2 -ml-3">
-										<div className="flex ">
-											<h4 className="uppercase font-bold text-2xl text-sky-700">
-												{workout.title}
-											</h4>
-										</div>
-										<p className="text-lg text-black">
-											<strong>Load (kg):</strong> {workout.load}
-										</p>
-										<p className="text-lg text-black">
-											<strong>Reps:</strong> {workout.reps}
-										</p>
-										<p className="text-sm text-black">{workout.updatedAt}</p>
-									</div>
-								</Link>
-								{/* <div>
-									<span className="material-symbols-outlined text-black cursor-pointer">
-										delete
-									</span>
-									<span className="material-symbols-outlined text-black ml-2 -mr-6 cursor-pointer">
-										edit
-									</span>
-								</div> */}
-							</div>
-						))}
-					</div>
+				{!user ? (
+					<div> Login or signup to continue</div>
 				) : (
 					<div>
-						<h1 className="text-center text-lg mt-5 mb-2 bg-[#1F2937] text-white p-2 rounded-lg">
-							No workouts
-						</h1>
-						<p className="text-lg text-center">Add a workout</p>
+						{workouts && workouts.length > 0 ? (
+							<div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-white">
+								{workouts.map((workout) => (
+									<div
+										key={workout._id}
+										className="m-5 bg-white hover:shadow-lg rounded-md p-6 px-14 flex"
+									>
+										<Link to={`/workout/${workout._id}`}>
+											<div className="flex flex-col items-start justify-center p-5 mr-2 -ml-3">
+												<div className="flex ">
+													<h4 className="uppercase font-bold text-2xl text-sky-700">
+														{workout.title}
+													</h4>
+												</div>
+												<p className="text-lg text-black">
+													<strong>Load (kg):</strong> {workout.load}
+												</p>
+												<p className="text-lg text-black">
+													<strong>Reps:</strong> {workout.reps}
+												</p>
+												<p className="text-sm text-black">
+													{workout.updatedAt}
+												</p>
+											</div>
+										</Link>
+										{/* <div>
+                      <span className="material-symbols-outlined text-black cursor-pointer">
+                        delete
+                      </span>
+                      <span className="material-symbols-outlined text-black ml-2 -mr-6 cursor-pointer">
+                        edit
+                      </span>
+                    </div> */}
+									</div>
+								))}
+							</div>
+						) : (
+							<div>
+								<h1 className="text-center text-lg mt-5 mb-2 bg-[#1F2937] text-white p-2 rounded-lg">
+									No workouts
+								</h1>
+								<p className="text-lg text-center">Add a workout</p>
+							</div>
+						)}
 					</div>
 				)}
 			</div>
