@@ -49,13 +49,13 @@ const WorkoutDetails = () => {
 				) : (
 					<div>
 						{workouts && workouts.length > 0 ? (
-							<div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-white">
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-white">
 								{workouts.map((workout) => (
-									<div
-										key={workout._id}
-										className="m-5 bg-white hover:shadow-lg rounded-md p-6 px-14 flex"
-									>
-										<Link to={`/workout/${workout._id}`}>
+									<Link to={`/workout/${workout._id}`}>
+										<div
+											key={workout._id}
+											className="m-5 bg-white hover:shadow-lg rounded-md p-6 px-14 flex"
+										>
 											<div className="flex flex-col items-start justify-center p-5 mr-2 -ml-3">
 												<div className="flex ">
 													<h4 className="uppercase font-bold text-2xl text-sky-700">
@@ -72,16 +72,8 @@ const WorkoutDetails = () => {
 													{workout.updatedAt}
 												</p>
 											</div>
-										</Link>
-										{/* <div>
-                      <span className="material-symbols-outlined text-black cursor-pointer">
-                        delete
-                      </span>
-                      <span className="material-symbols-outlined text-black ml-2 -mr-6 cursor-pointer">
-                        edit
-                      </span>
-                    </div> */}
-									</div>
+										</div>
+									</Link>
 								))}
 							</div>
 						) : (
