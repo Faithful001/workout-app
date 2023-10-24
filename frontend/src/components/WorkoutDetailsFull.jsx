@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 // import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import { API } from "../api";
 
 const WorkoutDetailsFull = () => {
 	const navigate = useNavigate();
@@ -22,14 +23,11 @@ const WorkoutDetailsFull = () => {
 
 	const fetchWorkoutsById = async () => {
 		try {
-			const response = await axios.get(
-				`http://localhost:3000/api/workouts/${id}`,
-				{
-					headers: {
-						Authorization: `Bearer: ${token}`,
-					},
-				}
-			);
+			const response = await axios.get(`${API.prodAPI}/api/workouts/${id}`, {
+				headers: {
+					Authorization: `Bearer: ${token}`,
+				},
+			});
 			console.log(response.data);
 			// dispatch({ type: "GET_WORKOUT", payload: response.data });
 			return response.data;
@@ -51,14 +49,11 @@ const WorkoutDetailsFull = () => {
 
 	const handleDelete = async () => {
 		try {
-			const response = await axios.delete(
-				`http://localhost:3000/api/workouts/${id}`,
-				{
-					headers: {
-						Authorization: `Bearer: ${token}`,
-					},
-				}
-			);
+			const response = await axios.delete(`${API.prodAPI}/api/workouts/${id}`, {
+				headers: {
+					Authorization: `Bearer: ${token}`,
+				},
+			});
 			console.log(response.data);
 			navigate("/");
 			// dispatch({ type: "GET_WORKOUT", payload: response.data });

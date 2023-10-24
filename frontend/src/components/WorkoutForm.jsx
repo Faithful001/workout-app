@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { WorkoutContext } from "../context/WorkoutContext";
 import { useContext } from "react";
+import { API } from "../api";
 
 const WorkoutForm = () => {
 	const [title, setTitle] = useState("");
@@ -27,7 +28,7 @@ const WorkoutForm = () => {
 		// console.log(workout)
 		try {
 			const response = await axios.post(
-				"http://localhost:3000/api/workouts/",
+				`${API.prodAPI}/api/workouts/`,
 				workout,
 				{
 					headers: {

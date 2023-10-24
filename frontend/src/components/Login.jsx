@@ -32,7 +32,7 @@ const Login = () => {
 	const body = { email, password };
 	const handleSubmit = async () => {
 		try {
-			const response = await axios.post(`${API.localAPI}/api/user/login`, body);
+			const response = await axios.post(`${API.prodAPI}/api/user/login`, body);
 			console.log(response?.data);
 			localStorage.setItem("user", JSON.stringify(response.data));
 			dispatch({ type: "LOGIN", payload: response?.data });

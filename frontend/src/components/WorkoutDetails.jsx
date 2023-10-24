@@ -2,6 +2,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { API } from "../api";
 
 const WorkoutDetails = () => {
 	const [workouts, setWorkouts] = useState([]);
@@ -15,7 +16,7 @@ const WorkoutDetails = () => {
 	if (token) {
 		function getWorkouts() {
 			return axios
-				.get("http://localhost:3000/api/workouts/", {
+				.get(`${API.prodAPI}/api/workouts/`, {
 					headers: { Authorization: `Bearer: ${token}` },
 				})
 				.then((res) => {

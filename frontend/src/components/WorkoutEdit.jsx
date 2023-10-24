@@ -12,6 +12,7 @@ import {
 	useQueryClient,
 } from "react-query";
 import axios from "axios";
+import { API } from "../api";
 
 const WorkoutEdit = () => {
 	let { id } = useParams();
@@ -28,14 +29,11 @@ const WorkoutEdit = () => {
 
 	const fetchWorkoutsById = async () => {
 		try {
-			const response = await axios.get(
-				`http://localhost:3000/api/workouts/${id}`,
-				{
-					headers: {
-						Authorization: `Bearer: ${token}`,
-					},
-				}
-			);
+			const response = await axios.get(`${API.prodAPI}/api/workouts/${id}`, {
+				headers: {
+					Authorization: `Bearer: ${token}`,
+				},
+			});
 			console.log(response.data);
 
 			// dispatch({ type: "GET_WORKOUT", payload: response.data });
@@ -56,7 +54,7 @@ const WorkoutEdit = () => {
 		const body = { title, load, reps };
 		try {
 			const response = await axios.patch(
-				`http://localhost:3000/api/workouts/${id}`,
+				`${API.prodAPI}/api/workouts/${id}`,
 				body,
 				{
 					headers: {
@@ -65,6 +63,7 @@ const WorkoutEdit = () => {
 				}
 			);
 			console.log(response.data);
+			window.location.reload();
 		} catch (error) {
 			console.log(error.message);
 		}

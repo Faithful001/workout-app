@@ -42,10 +42,7 @@ const Signup = () => {
 
 	const formSubmit = async () => {
 		try {
-			const response = await axios.post(
-				`${API.localAPI}/api/user/signup`,
-				body
-			);
+			const response = await axios.post(`${API.prodAPI}/api/user/signup`, body);
 			console.log(response?.data);
 			localStorage.setItem("user", JSON.stringify(response.data));
 			setMessage(response?.data);
