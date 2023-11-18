@@ -1,9 +1,9 @@
-import { Button, Checkbox, Label, TextInput } from "flowbite-react";
+import { Label, TextInput } from "flowbite-react";
 import { useContext, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { API } from "../api";
-import { QueryClient, useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ const Login = () => {
 	const [password, setPassword] = useState("");
 	const [message, setMessage] = useState("");
 	const [error, setError] = useState("");
-	const { user, dispatch } = useContext(AuthContext);
+	const { dispatch } = useContext(AuthContext);
 	const navigate = useNavigate();
 
 	const [passwordType, setPasswordType] = useState("password");

@@ -1,16 +1,8 @@
-import { AuthContext } from "../context/AuthContext";
-import { WorkoutContext } from "../context/WorkoutContext";
-import { useContext } from "react";
 import { Button, Label, TextInput } from "flowbite-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import {
-	QueryClient,
-	useMutation,
-	useQuery,
-	useQueryClient,
-} from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 import { API } from "../api";
 
@@ -42,7 +34,7 @@ const WorkoutEdit = () => {
 			console.log(error);
 		}
 	};
-	const { error, data } = useQuery(["workout"], fetchWorkoutsById);
+	const { data } = useQuery(["workout"], fetchWorkoutsById);
 	console.log(data);
 	useEffect(() => {
 		data && setTitle(data.title);
