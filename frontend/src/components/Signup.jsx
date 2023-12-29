@@ -19,7 +19,6 @@ const Signup = () => {
 	const [message, setMessage] = useState("");
 	const [error, setError] = useState("");
 
-	const [passwordType, setPasswordType] = useState("password");
 	const [visible, setVisible] = useState(false);
 
 	console.log(message);
@@ -31,11 +30,6 @@ const Signup = () => {
 
 	function handleVisibility() {
 		setVisible(!visible);
-		if (visible) {
-			setPasswordType("text");
-		} else {
-			setPasswordType("password");
-		}
 	}
 
 	const body = { email, name, password };
@@ -110,7 +104,7 @@ const Signup = () => {
 							<TextInput
 								id="password"
 								required
-								type={passwordType}
+								type={visible ? "text" : "password"}
 								onChange={(e) => setPassword(e.target.value)}
 								className=""
 							/>
@@ -138,7 +132,7 @@ const Signup = () => {
 						className="bg-sky-700 w-full 5 p-2 rounded-md text-white"
 						type="submit"
 					>
-						Sign up
+						{mutation.isLoading ? "Signup..." : "Signup"}
 					</button>
 					<p>
 						Already have an account?
@@ -147,15 +141,9 @@ const Signup = () => {
 						</Link>
 					</p>
 					{message && (
-						<div className="bg-green-700 opacity-70 text-white p-3 text-center">
-							{message}
-						</div>
+						<div className="text-green-700 text-center">{message}</div>
 					)}
-					{error && (
-						<div className="bg-red-700 opacity-70 text-white p-3 text-center">
-							{error}
-						</div>
-					)}
+					{error && <div className="text-red-700 text-center">{error}</div>}
 				</form>
 			</div>
 		</div>

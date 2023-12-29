@@ -15,18 +15,12 @@ const Login = () => {
 	const { dispatch } = useContext(AuthContext);
 	const navigate = useNavigate();
 
-	const [passwordType, setPasswordType] = useState("password");
 	const [visible, setVisible] = useState(false);
 
 	const queryClient = useQueryClient();
 
 	function handleVisibility() {
 		setVisible(!visible);
-		if (visible) {
-			setPasswordType("text");
-		} else {
-			setPasswordType("password");
-		}
 	}
 
 	const body = { email, password };
@@ -90,7 +84,7 @@ const Login = () => {
 							<TextInput
 								id="password"
 								required
-								type={passwordType}
+								type={visible ? "text" : "password"}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
 							{visible ? (
@@ -117,7 +111,7 @@ const Login = () => {
 						className="bg-sky-700 w-full 5 p-2 rounded-md text-white"
 						type="submit"
 					>
-						Log in
+						{mutation.isLoading ? "Login..." : "Login"}
 					</button>
 					<p>
 						Don't have an account?
@@ -127,15 +121,9 @@ const Login = () => {
 					</p>
 
 					{message && (
-						<div className="bg-green-700 opacity-70 text-white p-3 text-center">
-							{message}
-						</div>
+						<div className="text-green-700 text-center">{message}</div>
 					)}
-					{error && (
-						<div className="bg-red-700 opacity-70 text-white p-3 text-center">
-							{error}
-						</div>
-					)}
+					{error && <div className="text-red-700 text-center">{error}</div>}
 				</form>
 			</div>
 		</div>
