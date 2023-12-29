@@ -87,7 +87,7 @@ const Login = () => {
 								type={visible ? "text" : "password"}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
-							{visible ? (
+							{!visible ? (
 								<span
 									onClick={handleVisibility}
 									className="material-symbols-outlined absolute text-xl top-2 right-2 bg-[#F9FAFB] pl-5 cursor-pointer"
